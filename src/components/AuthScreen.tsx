@@ -7,9 +7,10 @@ import { UserProfile, Subscription } from '../types';
 interface AuthScreenProps {
   subscription: Subscription;
   onProfileSubmit: (profile: UserProfile) => void;
+  onViewMenu: () => void;
 }
 
-export default function AuthScreen({ subscription, onProfileSubmit }: AuthScreenProps) {
+export default function AuthScreen({ subscription, onProfileSubmit, onViewMenu }: AuthScreenProps) {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -50,7 +51,12 @@ export default function AuthScreen({ subscription, onProfileSubmit }: AuthScreen
         <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
           <div className="text-2xl italic text-on-surface tracking-tighter font-headline font-bold">Fitopus</div>
           <div className="hidden md:flex gap-8 items-center">
-            <a className="text-on-surface/60 font-medium hover:opacity-100 transition-opacity" href="#">Menu</a>
+            <button 
+              onClick={onViewMenu}
+              className="text-on-surface/60 font-medium hover:opacity-100 transition-opacity"
+            >
+              Menu
+            </button>
             <a className="text-on-surface/60 font-medium hover:opacity-100 transition-opacity" href="#">Philosophy</a>
             <a className="text-on-surface/60 font-medium hover:opacity-100 transition-opacity" href="#">Athletes</a>
             <button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold scale-105 shadow-sm">Get started</button>

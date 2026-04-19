@@ -10,6 +10,7 @@ import LandingScreen from './components/LandingScreen';
 import BuilderScreen from './components/BuilderScreen';
 import AuthScreen from './components/AuthScreen';
 import SuccessScreen from './components/SuccessScreen';
+import MenuScreen from './components/MenuScreen';
 
 const INITIAL_SUBSCRIPTION: Subscription = {
   durationId: '1week',
@@ -58,6 +59,7 @@ export default function App() {
             }
             navigate('builder');
           }} 
+          onViewMenu={() => navigate('menu')}
         />
       )}
       {state.step === 'builder' && (
@@ -65,6 +67,13 @@ export default function App() {
           subscription={state.subscription}
           onUpdate={updateSubscription}
           onSubscribe={() => navigate('auth')}
+          onViewMenu={() => navigate('menu')}
+        />
+      )}
+      {state.step === 'menu' && (
+        <MenuScreen
+          onBack={() => navigate('landing')}
+          onSelectPlan={() => navigate('builder')}
         />
       )}
       {state.step === 'auth' && (
@@ -74,6 +83,7 @@ export default function App() {
             updateProfile(profile);
             navigate('success');
           }}
+          onViewMenu={() => navigate('menu')}
         />
       )}
       {state.step === 'success' && (

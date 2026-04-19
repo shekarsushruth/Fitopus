@@ -2,9 +2,10 @@ import { motion } from 'motion/react';
 
 interface LandingScreenProps {
   onGetStarted: (goalId?: string) => void;
+  onViewMenu: () => void;
 }
 
-export default function LandingScreen({ onGetStarted }: LandingScreenProps) {
+export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScreenProps) {
   return (
     <div className="bg-surface text-on-surface font-body overflow-x-hidden">
       {/* TopNavBar */}
@@ -15,7 +16,12 @@ export default function LandingScreen({ onGetStarted }: LandingScreenProps) {
           </div>
           <div className="hidden md:flex items-center gap-10">
             <a className="text-primary border-b-4 border-primary-container pb-1 font-headline font-bold tracking-tight hover:scale-105 transition-transform duration-200" href="#">Home</a>
-            <a className="text-on-surface opacity-80 font-headline font-bold tracking-tight hover:scale-105 hover:text-secondary transition-transform duration-200" href="#">Menu</a>
+            <button 
+              onClick={onViewMenu}
+              className="text-on-surface opacity-80 font-headline font-bold tracking-tight hover:scale-105 hover:text-secondary transition-transform duration-200"
+            >
+              Menu
+            </button>
             <a className="text-on-surface opacity-80 font-headline font-bold tracking-tight hover:scale-105 hover:text-secondary transition-transform duration-200" href="#">Community</a>
             <a className="text-on-surface opacity-80 font-headline font-bold tracking-tight hover:scale-105 hover:text-secondary transition-transform duration-200" href="#">About</a>
           </div>
@@ -51,12 +57,15 @@ export default function LandingScreen({ onGetStarted }: LandingScreenProps) {
               </p>
               <div className="flex flex-wrap gap-4">
                 <button 
-                  onClick={onGetStarted}
+                  onClick={() => onGetStarted()}
                   className="bg-on-surface text-surface py-5 px-10 rounded-full font-headline font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-xl"
                 >
                   Get Started
                 </button>
-                <button className="bg-surface-container-high text-on-surface py-5 px-10 rounded-full font-headline font-bold text-lg hover:scale-105 active:scale-95 transition-all">
+                <button 
+                  onClick={onViewMenu}
+                  className="bg-surface-container-high text-on-surface py-5 px-10 rounded-full font-headline font-bold text-lg hover:scale-105 active:scale-95 transition-all"
+                >
                   View Menu
                 </button>
               </div>

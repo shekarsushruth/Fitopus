@@ -31,7 +31,7 @@ export interface Subscription {
 }
 
 export interface AppState {
-  step: 'landing' | 'builder' | 'auth' | 'success';
+  step: 'landing' | 'builder' | 'auth' | 'success' | 'menu';
   userProfile: UserProfile | null;
   subscription: Subscription;
 }

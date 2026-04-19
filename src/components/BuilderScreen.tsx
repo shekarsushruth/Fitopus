@@ -6,9 +6,10 @@ interface BuilderScreenProps {
   subscription: Subscription;
   onUpdate: (sub: Partial<Subscription>) => void;
   onSubscribe: () => void;
+  onViewMenu: () => void;
 }
 
-export default function BuilderScreen({ subscription, onUpdate, onSubscribe }: BuilderScreenProps) {
+export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onViewMenu }: BuilderScreenProps) {
   const toggleMeal = (meal: MealType) => {
     const next = subscription.mealsPerDay.includes(meal)
       ? subscription.mealsPerDay.filter(m => m !== meal)
@@ -26,7 +27,12 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe }: B
           <div className="text-3xl font-black text-primary tracking-tighter font-headline italic">Fitopus</div>
           <div className="hidden md:flex gap-12 items-center">
             <a className="font-headline font-bold tracking-tight text-primary border-b-4 border-primary pb-1" href="#">Plans</a>
-            <a className="font-headline font-bold tracking-tight text-on-surface opacity-60 hover:opacity-100 transition-opacity" href="#">Menu</a>
+            <button 
+              onClick={onViewMenu}
+              className="font-headline font-bold tracking-tight text-on-surface opacity-60 hover:opacity-100 transition-opacity"
+            >
+              Menu
+            </button>
             <a className="font-headline font-bold tracking-tight text-on-surface opacity-60 hover:opacity-100 transition-opacity" href="#">Our Story</a>
             <button className="bg-primary-container text-on-primary-container px-8 py-3 rounded-full font-bold shadow-lg shadow-primary/10">Get started</button>
           </div>
