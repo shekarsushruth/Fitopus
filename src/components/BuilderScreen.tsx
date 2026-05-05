@@ -87,6 +87,7 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                       <div className="p-2">
                         <h3 className="text-xl font-extrabold font-headline leading-tight">{goal.name}</h3>
                         <p className={`font-bold text-sm tracking-widest uppercase mt-1 ${selected ? 'text-on-primary-container' : 'text-secondary'}`}>{goal.kcal} kcal</p>
+                        <p className="text-xs text-on-surface-variant mt-1 font-medium">Starts from ₹250/meal</p>
                       </div>
                     </button>
                   );
