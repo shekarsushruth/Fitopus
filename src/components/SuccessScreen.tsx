@@ -38,7 +38,7 @@ export default function SuccessScreen({ onBackHome }: SuccessScreenProps) {
             />
             <div className="absolute -bottom-8 -right-8 bg-black text-white p-6 rounded-2xl shadow-xl -rotate-6">
               <span className="material-symbols-outlined text-4xl block mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-              <p className="font-headline font-black text-xl tracking-widest uppercase">Elite Access Granted</p>
+              <p className="font-headline font-black text-xl tracking-widest uppercase">Welcome to the Fitopus Club</p>
             </div>
           </motion.div>
 
@@ -49,10 +49,10 @@ export default function SuccessScreen({ onBackHome }: SuccessScreenProps) {
               transition={{ delay: 0.3 }}
             >
               <h1 className="text-6xl md:text-8xl font-display font-extrabold text-on-surface leading-[0.8] mb-6 tracking-tight">
-                WELCOME <br/> TO THE <br/> <span className="text-secondary opacity-80 italic">ELITE.</span>
+                WE'LL BE <br/> IN TOUCH <br/> <span className="text-secondary opacity-80 italic">SOON.</span>
               </h1>
               <p className="text-xl text-on-surface-variant font-medium leading-relaxed max-w-sm">
-                Your journey to radical change begins now. Our nutritionist will reach out within 24 hours.
+                Your order is in — and we're already on it. Our team will reach out to you personally within 24 hours to confirm your plan, sort your preferences, and get your first delivery rolling. Good food is coming your way.
               </p>
             </motion.div>
 
@@ -85,7 +85,7 @@ export default function SuccessScreen({ onBackHome }: SuccessScreenProps) {
             <span className="material-symbols-outlined text-on-surface/40">qr_code_2</span>
           </div>
         </div>
-        <p className="font-label uppercase tracking-[0.3em] font-black text-[10px] opacity-40">FITOPUS ELITE PROGRAM 2026</p>
+        <p className="font-label uppercase tracking-[0.3em] font-black text-[10px] opacity-40">FITOPUS — GOOD FOOD, COMING YOUR WAY</p>
       </footer>
     </div>
   );
