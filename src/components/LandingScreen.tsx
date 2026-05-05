@@ -38,7 +38,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
 
       <main>
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-primary-container pt-20 pb-32 px-6">
+        <section className="relative overflow-hidden bg-primary-container pt-16 pb-12 md:pb-24 px-6">
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -81,7 +81,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
               <div className="relative bg-surface rounded-xl p-4 shadow-2xl rotate-3 transform-gpu">
                 <img
                   alt="Healthy Bowl"
-                  className="rounded-lg w-full h-[500px] object-cover"
+                  className="rounded-lg w-full h-[280px] md:h-[500px] object-cover"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxEm-y1dx74wN66Um8aVLNfNNrcuJ-iqRcfqazo8b_sgNHcKI3rZjnJY7TD8pOooWEahlUBvNrz-cXW0Od3X-TXDRfzTAQ7Hi28AxUQD1U-vljPOW95P1h3IFGzqLTebo9uU73zIDnN8r4eu8hR8Ak-Q1KLOPdFQhJiogXBCcNpRl-nvkWqkqEsSuaMItnfghJKSaxDMj-SOud96rJSWaoT6kTzNSCgzgf_9pLWkD-F5DmKyf0ZAE6IJe0X_-A9L9f_fVWt9IXxZYZ"
                   referrerPolicy="no-referrer"
                 />
@@ -91,9 +91,9 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
         </section>
 
         {/* How It Works */}
-        <section className="py-20 px-6 bg-surface">
+        <section className="py-12 px-6 bg-surface">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8">
               <h2 className="text-4xl md:text-6xl font-headline font-black mb-4">Simple as Pie.</h2>
               <p className="text-on-surface-variant text-lg">But, you know, healthy pie.</p>
             </div>
@@ -126,9 +126,9 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
         </section>
 
         {/* Categories */}
-        <section className="py-24 px-6 bg-surface-container-low">
+        <section className="py-12 px-6 bg-surface-container-low">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-16">
+            <div className="mb-8">
               <span className="font-label uppercase tracking-widest text-secondary font-bold">Categories</span>
               <h2 className="text-4xl md:text-6xl font-headline font-black mt-2">Pick your <span className="text-primary italic">plan.</span></h2>
             </div>
@@ -164,9 +164,9 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
         </section>
 
         {/* Testimonials */}
-        <section className="py-32 px-6 bg-surface overflow-hidden">
+        <section className="py-14 px-6 bg-surface overflow-hidden">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-20 text-center">
+            <div className="mb-10 text-center">
               <h2 className="text-4xl md:text-7xl font-headline font-black tracking-tighter uppercase italic drop-shadow-sm">Real Talk.</h2>
               <p className="text-xl text-on-surface-variant">Hear it from the community.</p>
             </div>
@@ -228,7 +228,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
         </section>
 
         {/* CTA */}
-        <section className="py-24 px-6">
+        <section className="py-12 px-6">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -252,10 +252,10 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
         </section>
       </main>
 
-      <footer className="w-full rounded-t-[3rem] mt-20 bg-primary-container text-on-surface">
-        <div className="flex flex-col items-center justify-center p-16 w-full text-center">
-          <div className="text-4xl font-black mb-6 font-headline italic tracking-tighter">Fitopus</div>
-          <div className="flex flex-wrap justify-center gap-8 mb-12">
+      <footer className="w-full rounded-t-[3rem] mt-8 bg-primary-container text-on-surface">
+        <div className="flex flex-col items-center justify-center p-10 w-full text-center">
+          <div className="text-4xl font-black mb-4 font-headline italic tracking-tighter">Fitopus</div>
+          <div className="flex flex-wrap justify-center gap-8 mb-6">
             {['Manifesto', 'Privacy Policy', 'Terms of Vibes', 'Contact Us'].map(l => (
               <a key={l} className="font-label uppercase tracking-widest text-xs font-bold hover:tracking-[0.15em] transition-all opacity-70 hover:opacity-100" href="#">{l}</a>
             ))}
