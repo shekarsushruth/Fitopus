@@ -134,8 +134,8 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { id: 'loss', title: 'Weight Loss', desc: 'Calorie-conscious, nutrient-dense meals.', img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&h=500&fit=crop&q=80', badge: 'NEW' },
-                { id: 'gain', title: 'Muscle Gain', desc: 'Protein-heavy fuel for the grinders.', img: 'https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=800&h=500&fit=crop&q=80' },
+                { id: 'loss', title: 'Weight Loss', desc: 'Calorie-conscious, nutrient-dense meals.', img: '/weight-loss.jpg', badge: 'NEW' },
+                { id: 'gain', title: 'Muscle Gain', desc: 'Protein-heavy fuel for the grinders.', img: '/muscle-gain.jpg' },
                 { id: 'balanced', title: 'Balanced Diet', desc: 'Sustainable eating for everyday life.', img: 'https://plus.unsplash.com/premium_photo-1701113208728-51959e2d8834?w=800&h=500&fit=crop&q=80' }
               ].map((cat, i) => (
                 <motion.div
