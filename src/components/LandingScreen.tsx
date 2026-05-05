@@ -46,7 +46,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block px-4 py-1 mb-6 rounded-full bg-tertiary-container text-on-tertiary-container font-label text-xs tracking-widest uppercase font-bold -rotate-2">
-                The Future of Food
+                The Future of Fitness
               </span>
               <h1 className="text-5xl md:text-8xl font-display font-extrabold text-on-surface leading-[0.9] tracking-tighter mb-8">
                 Healthy Meals, <br/> 
