@@ -87,10 +87,10 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                       <div className="p-3">
                         <h3 className="text-xl font-extrabold font-headline leading-tight">{goal.name}</h3>
                         <p className={`font-bold text-sm tracking-widest uppercase mt-1 ${selected ? 'text-on-primary-container' : 'text-secondary'}`}>{goal.kcal} kcal</p>
-                        <div className="mt-3 pt-3 border-t border-outline-variant/30 flex items-baseline gap-1">
+                        <div className="mt-1.5 pt-1.5 border-t border-outline-variant/30 flex items-baseline gap-1">
                           <span className="text-base font-black font-headline text-on-surface">₹250</span>
                           <span className="text-sm font-semibold text-on-surface-variant">/meal</span>
-                          <span className="ml-auto text-xs font-medium text-on-surface-variant/60 italic">onwards</span>
+                          <span className="text-xs font-medium text-on-surface-variant/60 italic">onwards</span>
                         </div>
                       </div>
                     </button>
