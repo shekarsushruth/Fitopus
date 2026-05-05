@@ -79,46 +79,46 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
               <div className="absolute -top-10 -right-10 w-64 h-64 bg-secondary rounded-full opacity-20 blur-3xl animate-pulse"></div>
               <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-tertiary rounded-full opacity-30 blur-2xl"></div>
               <div className="relative bg-surface rounded-xl p-4 shadow-2xl rotate-3 transform-gpu">
-                <img 
-                  alt="Healthy Bowl" 
-                  className="rounded-lg w-full h-[500px] object-cover" 
+                <img
+                  alt="Healthy Bowl"
+                  className="rounded-lg w-full h-[500px] object-cover"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxEm-y1dx74wN66Um8aVLNfNNrcuJ-iqRcfqazo8b_sgNHcKI3rZjnJY7TD8pOooWEahlUBvNrz-cXW0Od3X-TXDRfzTAQ7Hi28AxUQD1U-vljPOW95P1h3IFGzqLTebo9uU73zIDnN8r4eu8hR8Ak-Q1KLOPdFQhJiogXBCcNpRl-nvkWqkqEsSuaMItnfghJKSaxDMj-SOud96rJSWaoT6kTzNSCgzgf_9pLWkD-F5DmKyf0ZAE6IJe0X_-A9L9f_fVWt9IXxZYZ"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute -bottom-6 -left-6 bg-tertiary-container p-6 rounded-lg shadow-xl -rotate-6">
-                  <p className="font-headline font-black text-2xl text-on-tertiary-container">100% KINETIC</p>
-                </div>
               </div>
             </motion.div>
           </div>
         </section>
 
         {/* How It Works */}
-        <section className="py-32 px-6 bg-surface">
+        <section className="py-20 px-6 bg-surface">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
+            <div className="text-center mb-12">
               <h2 className="text-4xl md:text-6xl font-headline font-black mb-4">Simple as Pie.</h2>
               <p className="text-on-surface-variant text-lg">But, you know, healthy pie.</p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="relative grid md:grid-cols-3 gap-6">
+              {/* connecting line on desktop */}
+              <div className="hidden md:block absolute top-16 left-[16.66%] right-[16.66%] h-0.5 bg-outline-variant/40 z-0" />
               {[
                 { icon: 'restaurant', title: 'Pick Your Plan', desc: 'Choose from Weight Loss, Muscle Gain, or Balanced vibes. Whatever fuels your fire.', color: 'bg-secondary-container', iconColor: 'text-secondary' },
                 { icon: 'timer', title: 'We Cook & Pack', desc: 'Our chefs whip up fresh, locally sourced ingredients daily. No preservatives, just joy.', color: 'bg-primary-container', iconColor: 'text-primary' },
                 { icon: 'local_shipping', title: 'Daily Delivery', desc: 'Fresh meals arrive at your door every morning. Ready to eat when you are.', color: 'bg-tertiary-container', iconColor: 'text-tertiary' }
               ].map((step, i) => (
-                <motion.div 
+                <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.2 }}
-                  className="p-10 rounded-xl bg-surface-container-low flex flex-col items-center text-center hover:translate-y-[-8px] transition-transform shadow-sm"
+                  className="relative z-10 p-8 rounded-xl bg-surface-container-low flex flex-col items-center text-center hover:translate-y-[-6px] transition-transform shadow-sm"
                 >
-                  <div className={`w-20 h-20 ${step.color} rounded-full flex items-center justify-center mb-8`}>
-                    <span className={`material-symbols-outlined ${step.iconColor} text-4xl`}>{step.icon}</span>
+                  <span className="text-xs font-headline font-black tracking-widest text-on-surface-variant/50 mb-3">0{i + 1}</span>
+                  <div className={`w-16 h-16 ${step.color} rounded-full flex items-center justify-center mb-6`}>
+                    <span className={`material-symbols-outlined ${step.iconColor} text-3xl`}>{step.icon}</span>
                   </div>
-                  <h3 className="text-2xl font-headline font-bold mb-4">{step.title}</h3>
-                  <p className="text-on-surface-variant leading-relaxed">{step.desc}</p>
+                  <h3 className="text-xl font-headline font-bold mb-3">{step.title}</h3>
+                  <p className="text-on-surface-variant leading-relaxed text-sm">{step.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -134,11 +134,11 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { id: 'loss', title: 'Weight Loss', desc: 'Calorie-conscious, nutrient-dense meals.', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDJfWeduSzs5LLNJexxnKwJDYi914x7BegDC7qO-roN548ckcgZU5FaqOc6bAvAGqeeqloGVA_kY3R3xFJOr6cEUQz-HgY6F0Fo-tOefr-5SZ2ypcOs4LbZX7TAPhEoHc3O_4sKW66Odzzml2F5ntbBGmMb0_BqRKZEw75c04owm2Lqx0stRWvricJEDyrZ7mSuqRoyy1DIwE3S1H5U51wJaB83IBipvgIsOEXI0vIMCCHXN7UkTF6lE_nole62re-309Nu2IUy7UB9', badge: 'NEW' },
-                { id: 'gain', title: 'Muscle Gain', desc: 'Protein-heavy fuel for the grinders.', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAnwbOUKWNRqXKbiDzM6m_ffMKTdakLS42czXxbHrbB8QFTuS_eCAC5afUyDzwny2Cn5HUth_z055VLwYYn94ubK7vZYbdy4vdemElah4EbEt4i4d2s_kcnM6aEP9yaV8laWSg4UA7kdetubk-EisGKZ-UjaCymxL7ac8TZnECgHVr1-ijbM33qd8VGD_HN4vIxyWdB4v8bWexPivn2HAZM_fNsKxgXERiiKynt2l3y0_nv1CpH1IB3MfHpi2jLToiUeQhGhufrK_DS' },
-                { id: 'balanced', title: 'Balanced Diet', desc: 'Sustainable eating for everyday life.', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAXzy7jrMz7eAfYRi8OkQ9qsINz7_dNKvXBFmG-y-7WyThjZOJbPO8PIpaNrfFdMlWmid1CJwHTYITjSQl_Jozu6k9SY-6nHH8Y53fcnCsAVulBOxTbL8JKxwzL4cFMItx22lLT8glYSpxHrVzwz4vRicDBmAq15lWI3bBzSlMmEp-5b0R75bQ9i0bcp-71aAkv3pPhQ0Fmacka7lnxyNoIZLOL3seD5Ab8rlJUEknJXeTEhvG7KwuW3430vbvYZWGfTxmqjaMwurvp' }
+                { id: 'loss', title: 'Weight Loss', desc: 'Calorie-conscious, nutrient-dense meals.', img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&h=500&fit=crop&q=80', badge: 'NEW' },
+                { id: 'gain', title: 'Muscle Gain', desc: 'Protein-heavy fuel for the grinders.', img: 'https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=800&h=500&fit=crop&q=80' },
+                { id: 'balanced', title: 'Balanced Diet', desc: 'Sustainable eating for everyday life.', img: 'https://plus.unsplash.com/premium_photo-1701113208728-51959e2d8834?w=800&h=500&fit=crop&q=80' }
               ].map((cat, i) => (
-                <motion.div 
+                <motion.div
                   key={cat.id}
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -206,9 +206,9 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                   whileInView={{ opacity: 1, x: 0 }}
                   className={`w-full p-10 ${t.bg} rounded-xl ${t.rotate} shadow-lg flex flex-col h-full`}
                 >
-                  <div className="flex gap-1 mb-6">
+                  <div className="flex gap-0.5 mb-6">
                     {[1,2,3,4,5].map(s => (
-                      <span key={s} className={`material-symbols-outlined text-${t.text}`} style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                      <span key={s} className={`text-xl text-${t.text}`}>★</span>
                     ))}
                   </div>
                   <p className={`text-2xl font-headline font-bold text-${t.text} mb-8 italic flex-grow leading-tight`}>{t.quote}</p>
@@ -234,9 +234,9 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
             whileInView={{ opacity: 1, scale: 1 }}
             className="max-w-5xl mx-auto bg-tertiary text-surface rounded-xl p-8 md:p-16 text-center relative overflow-hidden shadow-2xl"
           >
-            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none select-none">
-              <div className="absolute top-10 left-10 text-9xl font-black rotate-[-15deg] font-headline">YUM</div>
-              <div className="absolute bottom-10 right-10 text-9xl font-black rotate-[15deg] font-headline">FRESH</div>
+            <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none select-none">
+              <div className="absolute top-6 left-6 text-[8rem] font-black rotate-[-12deg] font-headline leading-none">YUM</div>
+              <div className="absolute bottom-6 right-6 text-[8rem] font-black rotate-[12deg] font-headline leading-none">FRESH</div>
             </div>
             <div className="relative z-10">
               <h2 className="text-4xl md:text-6xl font-headline font-black mb-8 leading-tight">Ready to fuel <br/> your vibe?</h2>
