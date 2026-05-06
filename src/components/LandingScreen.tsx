@@ -55,20 +55,21 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
               <p className="text-lg md:text-xl text-on-surface-variant max-w-lg mb-10 font-medium leading-relaxed">
                 Ditch the prep, keep the vibe. Chef-crafted nutrition tailored to your goals, delivered right to your doorstep.
               </p>
-              <div className="flex flex-wrap gap-4">
-                <button 
+              <div className="flex flex-wrap items-center gap-4">
+                <button
                   onClick={() => onGetStarted()}
                   className="bg-on-surface text-surface py-5 px-10 rounded-full font-headline font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-xl"
                 >
                   Get Started
                 </button>
-                <button 
+                <button
                   onClick={onViewMenu}
-                  className="bg-surface-container-high text-on-surface py-5 px-10 rounded-full font-headline font-bold text-lg hover:scale-105 active:scale-95 transition-all"
+                  className="text-on-surface font-headline font-bold text-lg underline underline-offset-4 opacity-70 hover:opacity-100 transition-opacity"
                 >
                   View Menu
                 </button>
               </div>
+              <p className="mt-4 text-sm text-on-surface-variant/80 font-medium">Starting from <span className="font-black text-on-surface">₹250/meal</span> · No lock-in</p>
             </motion.div>
             <motion.div 
               className="relative"

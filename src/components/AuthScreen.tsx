@@ -18,7 +18,7 @@ export default function AuthScreen({ subscription, onProfileSubmit, onViewMenu }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fullName || !phone) return;
+    if (!fullName || !phone || !email) return;
     
     setIsSubmitting(true);
     try {
@@ -105,13 +105,14 @@ export default function AuthScreen({ subscription, onProfileSubmit, onViewMenu }
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-4">Email Address <span className="opacity-50">(Optional)</span></label>
-                <input 
+                <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-4">Email Address</label>
+                <input
                   className="w-full px-6 py-4 rounded-full border-2 border-transparent bg-white focus:border-primary focus:ring-0 transition-all placeholder:text-on-surface/30 shadow-sm"
                   placeholder="elite@fitopus.com"
+                  required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  type="email" 
+                  type="email"
                 />
               </div>
 
@@ -121,7 +122,7 @@ export default function AuthScreen({ subscription, onProfileSubmit, onViewMenu }
                   className="w-full bg-primary-container text-on-primary-container py-5 rounded-full font-black text-xl tracking-widest shadow-xl hover:shadow-2xl transition-all transform hover:scale-[1.02] active:scale-95 uppercase disabled:opacity-50"
                   type="submit"
                 >
-                  {isSubmitting ? 'Processing...' : 'SUBMIT CREDENTIALS'}
+                  {isSubmitting ? 'Processing...' : "Let's Go →"}
                 </button>
               </div>
             </form>

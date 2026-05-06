@@ -39,7 +39,27 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
         </div>
       </nav>
 
-      <main className="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+      {/* Sticky mobile price bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0f172a] border-t border-white/10 px-5 py-3 flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Your Plan</p>
+          <p className="text-white text-sm font-bold truncate">{currentGoal?.name} · {currentDuration?.name ?? '—'}</p>
+        </div>
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="text-right">
+            <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Total</p>
+            <p className="text-primary-fixed font-black text-xl font-headline">₹{subscription.totalInvestment}</p>
+          </div>
+          <button
+            onClick={onSubscribe}
+            className="bg-primary-container text-on-primary-container py-3 px-5 rounded-full font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-lg"
+          >
+            Subscribe →
+          </button>
+        </div>
+      </div>
+
+      <main className="pt-32 pb-28 lg:pb-20 px-6 md:px-12 max-w-7xl mx-auto">
         <header className="mb-16 text-center md:text-left relative">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -106,25 +126,36 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                 <h2 className="text-2xl font-extrabold uppercase tracking-widest font-headline">Select Duration</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {PLAN_DURATIONS.map((plan) => (
-                  <button 
-                    key={plan.id}
-                    onClick={() => onUpdate({ durationId: plan.id })}
-                    className={`group rounded-xl text-left transition-all duration-300 transform px-4 py-8 relative ${
-                      subscription.durationId === plan.id 
-                        ? 'bg-primary-container scale-105 ring-4 ring-primary shadow-2xl' 
-                        : 'bg-surface-container-low hover:bg-primary-container/20 border-2 border-transparent'
-                    }`}
-                  >
-                    {plan.badge && (
-                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-on-surface text-surface text-[10px] px-3 py-1 rounded-full font-black tracking-widest uppercase z-10">
-                        {plan.badge}
+                {PLAN_DURATIONS.map((plan) => {
+                  const days = plan.id === '3day' ? 3 : plan.id === '1week' ? 5 : 10;
+                  const price = subscription.mealsPerDay.length * 250 * days;
+                  const selected = subscription.durationId === plan.id;
+                  return (
+                    <button
+                      key={plan.id}
+                      onClick={() => onUpdate({ durationId: plan.id })}
+                      className={`group rounded-xl text-left transition-all duration-300 transform px-4 py-6 relative ${
+                        selected
+                          ? 'bg-primary-container scale-105 ring-4 ring-primary shadow-2xl'
+                          : 'bg-surface-container-low hover:bg-primary-container/20 border-2 border-transparent'
+                      }`}
+                    >
+                      {plan.badge && (
+                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-on-surface text-surface text-[10px] px-3 py-1 rounded-full font-black tracking-widest uppercase z-10">
+                          {plan.badge}
+                        </span>
+                      )}
+                      <span className="block text-sm font-label font-bold uppercase tracking-widest text-secondary mb-1">{plan.subtitle}</span>
+                      <span className="block text-xl font-headline font-extrabold mb-3">{plan.name}</span>
+                      <span className={`block text-2xl font-black font-headline ${selected ? 'text-on-primary-container' : 'text-on-surface'}`}>
+                        ₹{price}
                       </span>
-                    )}
-                    <span className="block text-sm font-label font-bold uppercase tracking-widest text-secondary mb-2">{plan.subtitle}</span>
-                    <span className="block text-xl font-headline font-extrabold">{plan.name}</span>
-                  </button>
-                ))}
+                      <span className="block text-xs text-on-surface-variant/60 font-medium mt-0.5">
+                        ₹250 × {subscription.mealsPerDay.length} meal{subscription.mealsPerDay.length > 1 ? 's' : ''} × {days} days
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </section>
 

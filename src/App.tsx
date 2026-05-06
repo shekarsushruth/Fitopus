@@ -12,12 +12,17 @@ import AuthScreen from './components/AuthScreen';
 import SuccessScreen from './components/SuccessScreen';
 import MenuScreen from './components/MenuScreen';
 
+const DURATION_DAYS: Record<string, number> = { '3day': 3, '1week': 5, '2week': 10 };
+
+const calcInvestment = (durationId: string, mealsPerDay: string[]) =>
+  250 * mealsPerDay.length * (DURATION_DAYS[durationId] ?? 5);
+
 const INITIAL_SUBSCRIPTION: Subscription = {
   durationId: '1week',
   mealsPerDay: ['Breakfast', 'Dinner'],
   dietaryPreference: 'Vegetarian',
-  primaryGoalId: 'gain',
-  totalInvestment: 19000,
+  primaryGoalId: 'loss',
+  totalInvestment: calcInvestment('1week', ['Breakfast', 'Dinner']),
   status: 'draft'
 };
 
@@ -39,10 +44,11 @@ export default function App() {
   const navigate = (step: AppState['step']) => setState(prev => ({ ...prev, step }));
   
   const updateSubscription = (sub: Partial<Subscription>) => {
-    setState(prev => ({
-      ...prev,
-      subscription: { ...prev.subscription, ...sub }
-    }));
+    setState(prev => {
+      const updated = { ...prev.subscription, ...sub };
+      updated.totalInvestment = calcInvestment(updated.durationId, updated.mealsPerDay);
+      return { ...prev, subscription: updated };
+    });
   };
 
   const updateProfile = (profile: UserProfile) => {
