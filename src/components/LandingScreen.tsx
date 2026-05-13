@@ -1,11 +1,67 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState } from 'react';
 
 interface LandingScreenProps {
   onGetStarted: (goalId?: string) => void;
   onViewMenu: () => void;
 }
 
+type Gender = 'male' | 'female';
+type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active';
+
+const ACTIVITY_LABELS: Record<ActivityLevel, string> = {
+  sedentary: 'Sedentary',
+  light: 'Lightly Active',
+  moderate: 'Moderately Active',
+  active: 'Very Active',
+};
+
+const ACTIVITY_MULTIPLIERS: Record<ActivityLevel, number> = {
+  sedentary: 1.2,
+  light: 1.375,
+  moderate: 1.55,
+  active: 1.725,
+};
+
+function calcCalories(age: number, weight: number, height: number, gender: Gender, activity: ActivityLevel) {
+  // Mifflin-St Jeor BMR
+  const bmr = gender === 'male'
+    ? 10 * weight + 6.25 * height - 5 * age + 5
+    : 10 * weight + 6.25 * height - 5 * age - 161;
+  const tdee = Math.round(bmr * ACTIVITY_MULTIPLIERS[activity]);
+  return {
+    maintain: tdee,
+    lose: tdee - 500,
+    gain: tdee + 300,
+  };
+}
+
 export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScreenProps) {
+  const [calcAge, setCalcAge] = useState('');
+  const [calcWeight, setCalcWeight] = useState('');
+  const [calcHeight, setCalcHeight] = useState('');
+  const [calcGender, setCalcGender] = useState<Gender>('male');
+  const [calcActivity, setCalcActivity] = useState<ActivityLevel>('moderate');
+  const [calcResult, setCalcResult] = useState<{ maintain: number; lose: number; gain: number } | null>(null);
+  const [calcError, setCalcError] = useState('');
+
+  function handleCalc() {
+    const age = parseInt(calcAge);
+    const weight = parseFloat(calcWeight);
+    const height = parseFloat(calcHeight);
+
+    if (!calcAge || !calcWeight || !calcHeight || isNaN(age) || isNaN(weight) || isNaN(height)) {
+      setCalcError('Please fill in all fields with valid numbers.');
+      return;
+    }
+    if (age < 10 || age > 100) { setCalcError('Age must be between 10 and 100.'); return; }
+    if (weight < 20 || weight > 300) { setCalcError('Enter a valid weight (20–300 kg).'); return; }
+    if (height < 100 || height > 250) { setCalcError('Enter a valid height (100–250 cm).'); return; }
+
+    setCalcError('');
+    setCalcResult(calcCalories(age, weight, height, calcGender, calcActivity));
+  }
+
   return (
     <div className="bg-surface text-on-surface font-body overflow-x-hidden">
       {/* TopNavBar */}
@@ -123,6 +179,154 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Calorie Calculator */}
+        <section className="py-14 px-6 bg-surface">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-10"
+            >
+              <span className="inline-block px-4 py-1 mb-4 rounded-full bg-secondary-container text-on-secondary-container font-label text-xs tracking-widest uppercase font-bold">
+                Free Tool
+              </span>
+              <h2 className="text-4xl md:text-6xl font-headline font-black tracking-tight">
+                What does your <span className="text-secondary italic">body need?</span>
+              </h2>
+              <p className="mt-3 text-on-surface-variant text-lg max-w-xl mx-auto">
+                Find your daily calorie target in seconds — no sign-up needed.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-surface-container-low rounded-2xl p-6 md:p-10 shadow-sm"
+            >
+              {/* Gender toggle */}
+              <div className="mb-6">
+                <p className="text-sm font-headline font-bold text-on-surface-variant mb-2 uppercase tracking-widest">I am</p>
+                <div className="flex gap-3">
+                  {(['male', 'female'] as Gender[]).map(g => (
+                    <button
+                      key={g}
+                      onClick={() => setCalcGender(g)}
+                      className={`flex-1 py-3 rounded-xl font-headline font-bold text-sm capitalize transition-all ${
+                        calcGender === g
+                          ? 'bg-on-surface text-surface shadow-md scale-[1.02]'
+                          : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-highest'
+                      }`}
+                    >
+                      <span className="material-symbols-outlined align-middle mr-1 text-base">
+                        {g === 'male' ? 'man' : 'woman'}
+                      </span>
+                      {g}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Numeric inputs */}
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                {[
+                  { label: 'Age', unit: 'yrs', value: calcAge, set: setCalcAge, placeholder: '25' },
+                  { label: 'Weight', unit: 'kg', value: calcWeight, set: setCalcWeight, placeholder: '70' },
+                  { label: 'Height', unit: 'cm', value: calcHeight, set: setCalcHeight, placeholder: '170' },
+                ].map(({ label, unit, value, set, placeholder }) => (
+                  <div key={label}>
+                    <label className="block text-xs font-headline font-bold text-on-surface-variant uppercase tracking-widest mb-2">{label}</label>
+                    <div className="relative">
+                      <input
+                        type="number"
+                        placeholder={placeholder}
+                        value={value}
+                        onChange={e => set(e.target.value)}
+                        className="w-full bg-surface border border-outline-variant rounded-xl px-4 py-3 font-headline font-bold text-lg text-on-surface placeholder:text-on-surface-variant/30 focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-on-surface-variant/50">{unit}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Activity level */}
+              <div className="mb-8">
+                <p className="text-xs font-headline font-bold text-on-surface-variant uppercase tracking-widest mb-3">Activity Level</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {(Object.keys(ACTIVITY_LABELS) as ActivityLevel[]).map(lvl => (
+                    <button
+                      key={lvl}
+                      onClick={() => setCalcActivity(lvl)}
+                      className={`py-2.5 px-3 rounded-xl text-xs font-headline font-bold transition-all ${
+                        calcActivity === lvl
+                          ? 'bg-primary-container text-on-primary-container shadow-sm scale-[1.03]'
+                          : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-highest'
+                      }`}
+                    >
+                      {ACTIVITY_LABELS[lvl]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Error */}
+              {calcError && (
+                <p className="text-sm text-red-500 font-medium mb-4 text-center">{calcError}</p>
+              )}
+
+              {/* Calculate button */}
+              <button
+                onClick={handleCalc}
+                className="w-full bg-on-surface text-surface font-headline font-black text-lg py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-lg"
+              >
+                Calculate My Calories
+              </button>
+
+              {/* Result */}
+              <AnimatePresence>
+                {calcResult && (
+                  <motion.div
+                    key="result"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.4 }}
+                    className="mt-8 pt-8 border-t border-outline-variant/30"
+                  >
+                    <p className="text-center text-sm font-headline font-bold text-on-surface-variant uppercase tracking-widest mb-5">
+                      Your Daily Calorie Targets
+                    </p>
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      {[
+                        { label: 'Lose Weight', kcal: calcResult.lose, color: 'bg-secondary-container', textColor: 'text-secondary', icon: 'trending_down' },
+                        { label: 'Maintain', kcal: calcResult.maintain, color: 'bg-primary-container', textColor: 'text-primary', icon: 'balance' },
+                        { label: 'Build Muscle', kcal: calcResult.gain, color: 'bg-tertiary-container', textColor: 'text-tertiary', icon: 'trending_up' },
+                      ].map(({ label, kcal, color, textColor, icon }) => (
+                        <div key={label} className={`${color} rounded-xl p-4 text-center`}>
+                          <span className={`material-symbols-outlined ${textColor} text-2xl`}>{icon}</span>
+                          <p className="text-2xl font-headline font-black text-on-surface mt-1">{kcal.toLocaleString()}</p>
+                          <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mt-0.5">kcal / day</p>
+                          <p className="text-xs font-headline font-bold text-on-surface mt-2">{label}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => onGetStarted()}
+                      className="w-full bg-primary-container text-on-primary-container font-headline font-bold py-3 rounded-xl hover:scale-[1.02] active:scale-95 transition-all text-sm"
+                    >
+                      Build a plan around this →
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
         </section>
 
