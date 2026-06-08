@@ -106,13 +106,15 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                 { icon: 'timer', title: 'We Cook & Pack', desc: 'Our chefs whip up fresh, locally sourced ingredients daily. No preservatives, just joy.', cardBg: 'bg-primary-container', iconColor: 'text-primary' },
                 { icon: 'local_shipping', title: 'Daily Delivery', desc: 'Fresh meals arrive at your door every morning. Ready to eat when you are.', cardBg: 'bg-tertiary-container', iconColor: 'text-tertiary' }
               ].map((step, i) => (
-                <motion.div
+                <motion.button
                   key={i}
+                  type="button"
+                  onClick={() => onGetStarted()}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.2 }}
-                  className={`relative z-10 p-8 rounded-2xl ${step.cardBg} flex flex-col items-center text-center hover:translate-y-[-6px] transition-transform shadow-lg ring-1 ring-on-surface/5`}
+                  className={`relative z-10 w-full p-8 rounded-2xl ${step.cardBg} flex flex-col items-center text-center cursor-pointer hover:translate-y-[-6px] active:scale-[0.98] transition-transform shadow-lg ring-1 ring-on-surface/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-on-surface/40`}
                 >
                   <span className="text-xs font-headline font-black tracking-widest text-on-surface/40 mb-3">0{i + 1}</span>
                   <div className="w-16 h-16 bg-surface rounded-full flex items-center justify-center mb-6 shadow-sm">
@@ -120,7 +122,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                   </div>
                   <h3 className="text-xl font-headline font-bold mb-3 text-on-surface">{step.title}</h3>
                   <p className="text-on-surface/70 leading-relaxed text-sm">{step.desc}</p>
-                </motion.div>
+                </motion.button>
               ))}
             </div>
           </div>
