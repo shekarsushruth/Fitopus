@@ -1,46 +1,48 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..1000;1,9..40,300..1000&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&display=swap');
 
 @theme {
-  /* Editorial pairing: Fraunces (expressive serif) for display + headlines,
-     DM Sans (clean geometric sans) for body + labels. */
-  --font-headline: "Fraunces", "Georgia", serif;
-  --font-body: "DM Sans", "Helvetica Neue", sans-serif;
-  --font-display: "Fraunces", "Georgia", serif;
-  --font-label: "DM Sans", "Helvetica Neue", sans-serif;
+  /* Playful-bold pairing: Gabarito (rounded, chunky display) for display +
+     headlines, Hanken Grotesk (clean friendly sans) for body + labels. */
+  --font-headline: "Gabarito", "Trebuchet MS", sans-serif;
+  --font-body: "Hanken Grotesk", "Helvetica Neue", sans-serif;
+  --font-display: "Gabarito", "Trebuchet MS", sans-serif;
+  --font-label: "Hanken Grotesk", "Helvetica Neue", sans-serif;
 
-  /* Fitopus Kinetic Joy Palette */
-  --color-primary: #695f00;
+  /* Fitopus "Playful Pop" Palette
+     Signature yellow stays; teal -> electric cobalt, mauve -> hot pink,
+     on a clean warm-cream surface with deep-ink text so everything pops. */
+  --color-primary: #6b5d00;
   --color-on-primary: #ffffff;
-  --color-primary-container: #fee705;
-  --color-on-primary-container: #726700;
-  --color-primary-fixed: #fbe400;
-  --color-primary-fixed-dim: #dcc800;
+  --color-primary-container: #fee705;          /* signature yellow — unchanged */
+  --color-on-primary-container: #2e2900;
+  --color-primary-fixed: #fee705;
+  --color-primary-fixed-dim: #ecd400;
 
-  --color-secondary: #006972;
+  --color-secondary: #2c43e0;                  /* electric cobalt */
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #83f0fe;
-  --color-on-secondary-container: #006d77;
+  --color-secondary-container: #cdd6ff;
+  --color-on-secondary-container: #101c73;
 
-  --color-tertiary: #825154;
+  --color-tertiary: #e21a7c;                   /* hot pink */
   --color-on-tertiary: #ffffff;
-  --color-tertiary-container: #ffddde;
-  --color-on-tertiary-container: #8a585b;
+  --color-tertiary-container: #ffd4e7;
+  --color-on-tertiary-container: #720a3d;
 
-  --color-surface: #fff8f7;
-  --color-on-surface: #331013;
-  --color-surface-dim: #ffced0;
-  --color-surface-bright: #fff8f7;
+  --color-surface: #fffdf4;                    /* warm cream */
+  --color-on-surface: #181527;                 /* deep ink */
+  --color-surface-dim: #efe9d8;
+  --color-surface-bright: #fffdf4;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #fff0f0;
-  --color-surface-container: #ffe9e9;
-  --color-surface-container-high: #ffe1e2;
-  --color-surface-container-highest: #ffdada;
-  --color-surface-variant: #ffdada;
-  --color-on-surface-variant: #4b4732;
+  --color-surface-container-low: #fbf6e7;
+  --color-surface-container: #f6f1e1;
+  --color-surface-container-high: #f0ebda;
+  --color-surface-container-highest: #eae4d2;
+  --color-surface-variant: #ece6f3;            /* soft lilac for variety */
+  --color-on-surface-variant: #514d66;
 
-  --color-outline: #7c775f;
-  --color-outline-variant: #cdc7ab;
+  --color-outline: #847f95;
+  --color-outline-variant: #d7d2c4;
 
   --radius-lg: 2rem;
   --radius-xl: 3rem;
