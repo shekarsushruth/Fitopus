@@ -98,13 +98,11 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
               <h2 className="text-4xl md:text-6xl font-headline font-black mb-4">Simple as Pie.</h2>
               <p className="text-on-surface-variant text-lg">But, you know, healthy pie.</p>
             </div>
-            <div className="relative grid md:grid-cols-3 gap-6">
-              {/* connecting line on desktop */}
-              <div className="hidden md:block absolute top-16 left-[16.66%] right-[16.66%] h-0.5 bg-outline-variant/40 z-0" />
+            <div className="grid md:grid-cols-3 gap-6">
               {[
-                { icon: 'restaurant', title: 'Pick Your Plan', desc: 'Choose from Weight Loss, Muscle Gain, or Balanced vibes. Whatever fuels your fire.', cardBg: 'bg-secondary-container', iconColor: 'text-secondary' },
-                { icon: 'timer', title: 'We Cook & Pack', desc: 'Our chefs whip up fresh, locally sourced ingredients daily. No preservatives, just joy.', cardBg: 'bg-primary-container', iconColor: 'text-primary' },
-                { icon: 'local_shipping', title: 'Daily Delivery', desc: 'Fresh meals arrive at your door every morning. Ready to eat when you are.', cardBg: 'bg-tertiary-container', iconColor: 'text-tertiary' }
+                { icon: 'restaurant', title: 'Pick Your Plan', desc: 'Choose from Weight Loss, Muscle Gain, or Balanced vibes. Whatever fuels your fire.', cardBg: 'bg-secondary-container/40', badgeBg: 'bg-secondary-container' },
+                { icon: 'timer', title: 'We Cook & Pack', desc: 'Our chefs whip up fresh, locally sourced ingredients daily. No preservatives, just joy.', cardBg: 'bg-primary-container/40', badgeBg: 'bg-primary-container' },
+                { icon: 'local_shipping', title: 'Daily Delivery', desc: 'Fresh meals arrive at your door every morning. Ready to eat when you are.', cardBg: 'bg-tertiary-container/50', badgeBg: 'bg-tertiary-container' }
               ].map((step, i) => (
                 <motion.button
                   key={i}
@@ -113,15 +111,14 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.2 }}
-                  className={`relative z-10 w-full p-8 rounded-2xl ${step.cardBg} flex flex-col items-center text-center cursor-pointer hover:translate-y-[-6px] active:scale-[0.98] transition-transform shadow-lg ring-1 ring-on-surface/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-on-surface/40`}
+                  transition={{ delay: i * 0.15 }}
+                  className={`w-full px-8 py-10 rounded-3xl ${step.cardBg} flex flex-col items-center text-center cursor-pointer hover:translate-y-[-4px] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-on-surface/30`}
                 >
-                  <span className="text-xs font-headline font-black tracking-widest text-on-surface/40 mb-3">0{i + 1}</span>
-                  <div className="w-16 h-16 bg-surface rounded-full flex items-center justify-center mb-6 shadow-sm">
-                    <span className={`material-symbols-outlined ${step.iconColor} text-3xl`}>{step.icon}</span>
+                  <div className={`w-14 h-14 ${step.badgeBg} rounded-full flex items-center justify-center mb-5`}>
+                    <span className="material-symbols-outlined text-on-surface text-2xl">{step.icon}</span>
                   </div>
-                  <h3 className="text-xl font-headline font-bold mb-3 text-on-surface">{step.title}</h3>
-                  <p className="text-on-surface/70 leading-relaxed text-sm">{step.desc}</p>
+                  <h3 className="text-sm font-headline font-extrabold uppercase tracking-widest mb-3 text-on-surface">{step.title}</h3>
+                  <p className="text-on-surface-variant leading-relaxed text-sm max-w-[24ch]">{step.desc}</p>
                 </motion.button>
               ))}
             </div>
