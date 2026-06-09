@@ -52,7 +52,7 @@ landing → builder → auth → success
 
 - Tailwind CSS v4 via `@tailwindcss/vite` plugin — no `tailwind.config.js`, config is in `src/index.css`.
 - Design tokens (`bg-primary-container`, `text-on-surface`, etc.) follow Material Design 3 naming and are defined as CSS variables in `src/index.css`.
-- Fonts: `Poppins` for headlines/display (`font-headline`, `font-display`), `Inter` for body (`font-body`).
+- Fonts: `Fraunces` (expressive serif) for headlines/display (`font-headline`, `font-display`), `DM Sans` for body/labels (`font-body`, `font-label`). Loaded as variable fonts (incl. italics) via the Google Fonts `@import` in `src/index.css`.
 - Animations use `motion/react` (Framer Motion v12).
 - Icons use `material-symbols-outlined` loaded via Google Fonts CDN (render as text strings inside `<span>` — not React components).
 
