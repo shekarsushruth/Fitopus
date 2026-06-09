@@ -112,13 +112,13 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.15 }}
-                  className={`w-full px-8 py-10 rounded-3xl ${step.cardBg} flex flex-col items-center text-center cursor-pointer hover:translate-y-[-4px] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-on-surface/30`}
+                  className={`w-full px-7 py-8 rounded-3xl ${step.cardBg} flex flex-col items-center justify-center text-center cursor-pointer hover:translate-y-[-4px] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-on-surface/30`}
                 >
-                  <div className={`w-14 h-14 ${step.badgeBg} rounded-full flex items-center justify-center mb-5`}>
-                    <span className="material-symbols-outlined text-on-surface text-2xl">{step.icon}</span>
+                  <div className={`w-[4.5rem] h-[4.5rem] ${step.badgeBg} rounded-full flex items-center justify-center mb-5`}>
+                    <span className="material-symbols-outlined text-on-surface text-[2rem]">{step.icon}</span>
                   </div>
-                  <h3 className="text-sm font-headline font-extrabold uppercase tracking-widest mb-3 text-on-surface">{step.title}</h3>
-                  <p className="text-on-surface-variant leading-relaxed text-sm max-w-[24ch]">{step.desc}</p>
+                  <h3 className="text-lg md:text-xl font-headline font-extrabold uppercase tracking-wide mb-2.5 text-on-surface">{step.title}</h3>
+                  <p className="text-on-surface-variant leading-relaxed text-[15px] md:text-base">{step.desc}</p>
                 </motion.button>
               ))}
             </div>
