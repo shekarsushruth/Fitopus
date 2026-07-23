@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react';
 import { db, testFirestoreConnection } from './lib/firebase';
 import { AppState, Subscription, UserProfile } from './types';
+import { PRICE_PER_MEAL } from './constants';
 import LandingScreen from './components/LandingScreen';
 import BuilderScreen from './components/BuilderScreen';
 import AuthScreen from './components/AuthScreen';
@@ -15,7 +16,7 @@ import MenuScreen from './components/MenuScreen';
 const DURATION_DAYS: Record<string, number> = { '3day': 3, '1week': 5, '2week': 10 };
 
 const calcInvestment = (durationId: string, mealsPerDay: string[]) =>
-  250 * mealsPerDay.length * (DURATION_DAYS[durationId] ?? 5);
+  PRICE_PER_MEAL * mealsPerDay.length * (DURATION_DAYS[durationId] ?? 5);
 
 const INITIAL_SUBSCRIPTION: Subscription = {
   durationId: '1week',
@@ -69,11 +70,12 @@ export default function App() {
         />
       )}
       {state.step === 'builder' && (
-        <BuilderScreen 
+        <BuilderScreen
           subscription={state.subscription}
           onUpdate={updateSubscription}
           onSubscribe={() => navigate('auth')}
           onViewMenu={() => navigate('menu')}
+          onGoHome={() => navigate('landing')}
         />
       )}
       {state.step === 'menu' && (
@@ -83,13 +85,14 @@ export default function App() {
         />
       )}
       {state.step === 'auth' && (
-        <AuthScreen 
+        <AuthScreen
           subscription={state.subscription}
           onProfileSubmit={(profile) => {
             updateProfile(profile);
             navigate('success');
           }}
           onViewMenu={() => navigate('menu')}
+          onGoHome={() => navigate('landing')}
         />
       )}
       {state.step === 'success' && (

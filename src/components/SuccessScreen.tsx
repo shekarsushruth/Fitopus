@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import Logo from './Logo';
 
 interface SuccessScreenProps {
   onBackHome: () => void;
@@ -12,7 +13,9 @@ export default function SuccessScreen({ onBackHome }: SuccessScreenProps) {
 
       <nav className="w-full top-0 sticky z-50 glass-header border-b border-outline-variant/10 rounded-full mt-4 max-w-7xl mx-auto shadow-sm">
         <div className="flex justify-between items-center px-10 py-4">
-          <div className="text-2xl font-black text-on-surface tracking-tighter italic font-headline">Fitopus</div>
+          <button onClick={onBackHome} aria-label="Fitopus — go to homepage" className="shrink-0 hover:opacity-70 transition-opacity">
+            <Logo className="h-7 md:h-8 w-auto text-on-surface" />
+          </button>
           <button 
             onClick={onBackHome}
             className="font-headline font-bold text-on-surface-variant hover:text-on-surface transition-colors"

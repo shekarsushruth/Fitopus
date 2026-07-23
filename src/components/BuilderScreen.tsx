@@ -1,15 +1,17 @@
 import { motion } from 'motion/react';
 import { Subscription, MealType } from '../types';
-import { PLAN_DURATIONS, PRIMARY_GOALS } from '../constants';
+import { PLAN_DURATIONS, PRIMARY_GOALS, PRICE_PER_MEAL } from '../constants';
+import Logo from './Logo';
 
 interface BuilderScreenProps {
   subscription: Subscription;
   onUpdate: (sub: Partial<Subscription>) => void;
   onSubscribe: () => void;
   onViewMenu: () => void;
+  onGoHome: () => void;
 }
 
-export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onViewMenu }: BuilderScreenProps) {
+export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onViewMenu, onGoHome }: BuilderScreenProps) {
   const toggleMeal = (meal: MealType) => {
     const next = subscription.mealsPerDay.includes(meal)
       ? subscription.mealsPerDay.filter(m => m !== meal)
@@ -24,7 +26,9 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
     <div className="bg-surface text-on-surface font-body min-h-screen">
       <nav className="fixed top-0 w-full z-50 glass-header border-b border-outline-variant/10">
         <div className="flex justify-between items-center px-10 py-6 max-w-screen-2xl mx-auto">
-          <div className="text-3xl font-black text-primary tracking-tighter font-headline italic">Fitopus</div>
+          <button onClick={onGoHome} aria-label="Fitopus — go to homepage" className="shrink-0 hover:opacity-70 transition-opacity">
+            <Logo className="h-8 md:h-9 w-auto text-on-surface" />
+          </button>
           <div className="hidden md:flex gap-12 items-center">
             <a className="font-headline font-bold tracking-tight text-primary border-b-4 border-primary pb-1" href="#">Plans</a>
             <button 
@@ -108,7 +112,7 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                         <h3 className="text-xl font-extrabold font-headline leading-tight">{goal.name}</h3>
                         <p className={`font-bold text-sm tracking-widest uppercase mt-1 ${selected ? 'text-on-primary-container' : 'text-secondary'}`}>{goal.kcal} kcal</p>
                         <div className="mt-1.5 pt-1.5 border-t border-outline-variant/30 flex items-baseline gap-1">
-                          <span className="text-base font-black font-headline text-on-surface">₹250</span>
+                          <span className="text-base font-black font-headline text-on-surface">₹{PRICE_PER_MEAL}</span>
                           <span className="text-sm font-semibold text-on-surface-variant">/meal</span>
                           <span className="text-xs font-medium text-on-surface-variant/60 italic">onwards</span>
                         </div>
@@ -128,7 +132,7 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {PLAN_DURATIONS.map((plan) => {
                   const days = plan.id === '3day' ? 3 : plan.id === '1week' ? 5 : 10;
-                  const price = subscription.mealsPerDay.length * 250 * days;
+                  const price = subscription.mealsPerDay.length * PRICE_PER_MEAL * days;
                   const selected = subscription.durationId === plan.id;
                   return (
                     <button
@@ -151,7 +155,7 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                         ₹{price}
                       </span>
                       <span className="block text-xs text-on-surface-variant/60 font-medium mt-0.5">
-                        ₹250 × {subscription.mealsPerDay.length} meal{subscription.mealsPerDay.length > 1 ? 's' : ''} × {days} days
+                        ₹{PRICE_PER_MEAL} × {subscription.mealsPerDay.length} meal{subscription.mealsPerDay.length > 1 ? 's' : ''} × {days} days
                       </span>
                     </button>
                   );
@@ -276,7 +280,9 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
 
       <footer className="bg-primary-container rounded-t-[3rem] mt-20">
         <div className="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-screen-2xl mx-auto">
-          <div className="text-4xl font-black text-on-surface mb-8 md:mb-0 font-headline italic">Fitopus</div>
+          <button onClick={onGoHome} aria-label="Fitopus — go to homepage" className="mb-8 md:mb-0 hover:opacity-70 transition-opacity">
+            <Logo className="h-10 w-auto text-on-primary-container" />
+          </button>
           <div className="flex flex-wrap justify-center gap-10 mb-8 md:mb-0">
             {['Community', 'Manifesto', 'Support', 'Privacy'].map(item => (
               <a key={item} className="font-headline font-extrabold uppercase tracking-widest text-on-surface opacity-80 hover:opacity-100 transition-opacity" href="#">{item}</a>

@@ -1,5 +1,9 @@
 import { PlanDuration, PrimaryGoal } from './types';
 
+/** Price per meal in ₹. Single source of truth — used for both the
+ *  "starting from" copy and the plan total calculation. */
+export const PRICE_PER_MEAL = 210;
+
 export const PLAN_DURATIONS: PlanDuration[] = [
   { id: '3day', name: '3 Day Trial', subtitle: 'Short Term' },
   { id: '1week', name: '1 Week (MON-FRI)', subtitle: 'Kickstart', badge: 'MOST POPULAR' },

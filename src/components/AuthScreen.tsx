@@ -3,14 +3,16 @@ import { motion } from 'motion/react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { UserProfile, Subscription } from '../types';
+import Logo from './Logo';
 
 interface AuthScreenProps {
   subscription: Subscription;
   onProfileSubmit: (profile: UserProfile) => void;
   onViewMenu: () => void;
+  onGoHome: () => void;
 }
 
-export default function AuthScreen({ subscription, onProfileSubmit, onViewMenu }: AuthScreenProps) {
+export default function AuthScreen({ subscription, onProfileSubmit, onViewMenu, onGoHome }: AuthScreenProps) {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -49,7 +51,9 @@ export default function AuthScreen({ subscription, onProfileSubmit, onViewMenu }
     <div className="bg-surface text-on-surface font-body min-h-screen flex flex-col">
       <header className="w-full top-0 sticky z-50 glass-header border-b border-outline-variant/10">
         <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-          <div className="text-2xl italic text-on-surface tracking-tighter font-headline font-bold">Fitopus</div>
+          <button onClick={onGoHome} aria-label="Fitopus — go to homepage" className="shrink-0 hover:opacity-70 transition-opacity">
+            <Logo className="h-7 md:h-8 w-auto text-on-surface" />
+          </button>
           <div className="hidden md:flex gap-8 items-center">
             <button 
               onClick={onViewMenu}
@@ -145,7 +149,9 @@ export default function AuthScreen({ subscription, onProfileSubmit, onViewMenu }
 
       <footer className="w-full py-12 bg-primary-container text-on-surface-container">
         <div className="flex flex-col md:flex-row justify-between items-center px-8 gap-6 max-w-7xl mx-auto">
-          <div className="font-black italic text-on-surface text-xl font-headline tracking-tighter">Fitopus</div>
+          <button onClick={onGoHome} aria-label="Fitopus — go to homepage" className="hover:opacity-70 transition-opacity">
+            <Logo className="h-8 w-auto text-on-primary-container" />
+          </button>
           <div className="flex gap-8 font-label text-sm tracking-wide uppercase font-bold">
             <a className="hover:text-secondary transition-colors" href="#">Privacy</a>
             <a className="hover:text-secondary transition-colors" href="#">Terms</a>

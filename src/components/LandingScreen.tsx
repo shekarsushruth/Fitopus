@@ -1,4 +1,6 @@
 import { motion } from 'motion/react';
+import Logo from './Logo';
+import { PRICE_PER_MEAL } from '../constants';
 
 interface LandingScreenProps {
   onGetStarted: (goalId?: string) => void;
@@ -11,9 +13,13 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
       {/* TopNavBar */}
       <nav className="w-full top-0 sticky z-50 glass-header border-b border-outline-variant/10">
         <div className="flex justify-between items-center px-8 py-6 max-w-[1440px] mx-auto">
-          <div className="text-3xl font-black text-on-surface italic font-headline tracking-tight">
-            Fitopus
-          </div>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Fitopus — back to top"
+            className="shrink-0 hover:opacity-70 transition-opacity"
+          >
+            <Logo className="h-8 md:h-9 w-auto text-on-surface" />
+          </button>
           <div className="hidden md:flex items-center gap-10">
             <a className="text-primary border-b-4 border-primary-container pb-1 font-headline font-bold tracking-tight hover:scale-105 transition-transform duration-200" href="#">Home</a>
             <button 
@@ -69,7 +75,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                   View Menu
                 </button>
               </div>
-              <p className="mt-4 text-sm text-on-surface-variant/80 font-medium">Starting from <span className="font-black text-on-surface">₹250/meal</span> · No lock-in</p>
+              <p className="mt-4 text-sm text-on-surface-variant/80 font-medium">Starting from <span className="font-black text-on-surface">₹{PRICE_PER_MEAL}/meal</span> · No lock-in</p>
             </motion.div>
             <motion.div 
               className="relative"
@@ -254,7 +260,13 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
 
       <footer className="w-full rounded-t-[3rem] mt-8 bg-primary-container text-on-surface">
         <div className="flex flex-col items-center justify-center p-10 w-full text-center">
-          <div className="text-4xl font-black mb-4 font-headline italic tracking-tighter">Fitopus</div>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Fitopus — back to top"
+            className="mb-5 hover:opacity-70 transition-opacity"
+          >
+            <Logo className="h-10 w-auto text-on-primary-container" />
+          </button>
           <div className="flex flex-wrap justify-center gap-8 mb-6">
             {['Manifesto', 'Privacy Policy', 'Terms of Vibes', 'Contact Us'].map(l => (
               <a key={l} className="font-label uppercase tracking-widest text-xs font-bold hover:tracking-[0.15em] transition-all opacity-70 hover:opacity-100" href="#">{l}</a>
