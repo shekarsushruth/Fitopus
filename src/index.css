@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Web fonts are linked from index.html so they can download in parallel with
+   this stylesheet rather than being discovered after it parses. */
 
 @theme {
   --font-headline: "Poppins", sans-serif;

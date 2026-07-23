@@ -5,9 +5,12 @@ import { PRICE_PER_MEAL } from '../constants';
 interface LandingScreenProps {
   onGetStarted: (goalId?: string) => void;
   onViewMenu: () => void;
+  /** Warm the next screen's JS chunk on hover so navigation feels instant. */
+  onPrefetchBuilder?: () => void;
+  onPrefetchMenu?: () => void;
 }
 
-export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScreenProps) {
+export default function LandingScreen({ onGetStarted, onViewMenu, onPrefetchBuilder, onPrefetchMenu }: LandingScreenProps) {
   return (
     <div className="bg-surface text-on-surface font-body overflow-x-hidden">
       {/* TopNavBar */}
@@ -22,8 +25,9 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
           </button>
           <div className="hidden md:flex items-center gap-10">
             <a className="text-primary border-b-4 border-primary-container pb-1 font-headline font-bold tracking-tight hover:scale-105 transition-transform duration-200" href="#">Home</a>
-            <button 
+            <button
               onClick={onViewMenu}
+              onMouseEnter={onPrefetchMenu}
               className="text-on-surface opacity-80 font-headline font-bold tracking-tight hover:scale-105 hover:text-secondary transition-transform duration-200"
             >
               Menu
@@ -32,8 +36,9 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
             <a className="text-on-surface opacity-80 font-headline font-bold tracking-tight hover:scale-105 hover:text-secondary transition-transform duration-200" href="#">About</a>
           </div>
           <div className="flex items-center gap-4">
-            <button 
-              onClick={onGetStarted}
+            <button
+              onClick={() => onGetStarted()}
+              onMouseEnter={onPrefetchBuilder}
               className="bg-primary-container text-on-primary-container font-headline font-bold px-8 py-3 rounded-full hover:scale-105 active:scale-95 transition-all shadow-sm"
             >
               Get started
@@ -64,12 +69,14 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => onGetStarted()}
+                  onMouseEnter={onPrefetchBuilder}
                   className="bg-on-surface text-surface py-5 px-10 rounded-full font-headline font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-xl"
                 >
                   Get Started
                 </button>
                 <button
                   onClick={onViewMenu}
+                  onMouseEnter={onPrefetchMenu}
                   className="text-on-surface font-headline font-bold text-lg underline underline-offset-4 opacity-70 hover:opacity-100 transition-opacity"
                 >
                   View Menu
@@ -88,6 +95,10 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
               <div className="relative bg-surface rounded-xl p-4 shadow-2xl rotate-3 transform-gpu">
                 <img
                   alt="Healthy Bowl"
+                  fetchPriority="high"
+                  decoding="async"
+                  width={800}
+                  height={500}
                   className="rounded-lg w-full h-[280px] md:h-[500px] object-cover"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxEm-y1dx74wN66Um8aVLNfNNrcuJ-iqRcfqazo8b_sgNHcKI3rZjnJY7TD8pOooWEahlUBvNrz-cXW0Od3X-TXDRfzTAQ7Hi28AxUQD1U-vljPOW95P1h3IFGzqLTebo9uU73zIDnN8r4eu8hR8Ak-Q1KLOPdFQhJiogXBCcNpRl-nvkWqkqEsSuaMItnfghJKSaxDMj-SOud96rJSWaoT6kTzNSCgzgf_9pLWkD-F5DmKyf0ZAE6IJe0X_-A9L9f_fVWt9IXxZYZ"
                   referrerPolicy="no-referrer"
@@ -152,7 +163,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                   onClick={() => onGetStarted(cat.id)}
                   className="group relative overflow-hidden rounded-xl bg-surface-container-highest h-[500px] shadow-lg cursor-pointer"
                 >
-                  <img src={cat.img} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
+                  <img src={cat.img} alt={cat.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
                   <div className="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-transparent to-transparent"></div>
                   <div className="absolute inset-x-0 bottom-10 flex flex-col items-center text-center px-10 text-white">
                     <h3 className="text-4xl font-headline font-semibold mb-2">{cat.title}</h3>
@@ -220,7 +231,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
                   <p className={`text-2xl font-headline font-bold text-${t.text} mb-8 italic flex-grow leading-tight`}>{t.quote}</p>
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden bg-surface flex-shrink-0 border-2 border-white/20">
-                      <img src={t.img} alt={t.author} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                      <img src={t.img} alt={t.author} loading="lazy" decoding="async" width={48} height={48} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                     </div>
                     <div>
                       <p className={`font-bold text-${t.text}`}>{t.author}</p>
@@ -247,8 +258,9 @@ export default function LandingScreen({ onGetStarted, onViewMenu }: LandingScree
             <div className="relative z-10">
               <h2 className="text-4xl md:text-6xl font-headline font-black mb-8 leading-tight">Ready to fuel <br/> your vibe?</h2>
               <p className="text-xl mb-12 opacity-90 max-w-lg mx-auto font-medium">Join 10k+ people eating better every single day. First week is 20% off.</p>
-              <button 
-                onClick={onGetStarted}
+              <button
+                onClick={() => onGetStarted()}
+                onMouseEnter={onPrefetchBuilder}
                 className="bg-primary-container text-on-primary-container text-xl font-headline font-black py-6 px-16 rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_15px_30px_rgba(254,231,5,0.3)]"
               >
                 START YOUR SUBSCRIPTION

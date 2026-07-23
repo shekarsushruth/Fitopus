@@ -3,15 +3,33 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
-import { db, testFirestoreConnection } from './lib/firebase';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { AppState, Subscription, UserProfile } from './types';
 import { PRICE_PER_MEAL } from './constants';
 import LandingScreen from './components/LandingScreen';
-import BuilderScreen from './components/BuilderScreen';
-import AuthScreen from './components/AuthScreen';
-import SuccessScreen from './components/SuccessScreen';
-import MenuScreen from './components/MenuScreen';
+
+// Only the landing screen is needed for first paint. Everything else — and
+// crucially the Firebase SDK that AuthScreen pulls in — is split into
+// separate chunks fetched on demand.
+const BuilderScreen = lazy(() => import('./components/BuilderScreen'));
+const AuthScreen = lazy(() => import('./components/AuthScreen'));
+const SuccessScreen = lazy(() => import('./components/SuccessScreen'));
+const MenuScreen = lazy(() => import('./components/MenuScreen'));
+
+/** Warm the chunk for a screen before the user actually navigates to it. */
+const prefetch = {
+  builder: () => import('./components/BuilderScreen'),
+  menu: () => import('./components/MenuScreen'),
+  auth: () => import('./components/AuthScreen'),
+};
+
+function ScreenFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-surface">
+      <div className="w-10 h-10 rounded-full border-4 border-primary-container border-t-transparent animate-spin" />
+    </div>
+  );
+}
 
 const DURATION_DAYS: Record<string, number> = { '3day': 3, '1week': 5, '2week': 10 };
 
@@ -35,7 +53,18 @@ export default function App() {
   });
 
   useEffect(() => {
-    testFirestoreConnection();
+    // The Firebase SDK is ~84 kB gzipped, so it is loaded dynamically *and*
+    // deferred to idle time — it never competes with first paint.
+    const run = () =>
+      import('./lib/firebase').then(({ testFirestoreConnection }) => testFirestoreConnection());
+
+    const ric = window.requestIdleCallback;
+    if (ric) {
+      const id = ric(run, { timeout: 4000 });
+      return () => window.cancelIdleCallback?.(id);
+    }
+    const timer = setTimeout(run, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -58,48 +87,51 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      {state.step === 'landing' && (
-        <LandingScreen 
-          onGetStarted={(goalId) => {
-            if (goalId) {
-              updateSubscription({ primaryGoalId: goalId });
-            }
-            navigate('builder');
-          }} 
-          onViewMenu={() => navigate('menu')}
-        />
-      )}
-      {state.step === 'builder' && (
-        <BuilderScreen
-          subscription={state.subscription}
-          onUpdate={updateSubscription}
-          onSubscribe={() => navigate('auth')}
-          onViewMenu={() => navigate('menu')}
-          onGoHome={() => navigate('landing')}
-        />
-      )}
-      {state.step === 'menu' && (
-        <MenuScreen
-          onBack={() => navigate('landing')}
-          onSelectPlan={() => navigate('builder')}
-        />
-      )}
-      {state.step === 'auth' && (
-        <AuthScreen
-          subscription={state.subscription}
-          onProfileSubmit={(profile) => {
-            updateProfile(profile);
-            navigate('success');
-          }}
-          onViewMenu={() => navigate('menu')}
-          onGoHome={() => navigate('landing')}
-        />
-      )}
-      {state.step === 'success' && (
-        <SuccessScreen 
-          onBackHome={() => navigate('landing')}
-        />
-      )}
+      <Suspense fallback={<ScreenFallback />}>
+        {state.step === 'landing' && (
+          <LandingScreen
+            onGetStarted={(goalId) => {
+              if (goalId) {
+                updateSubscription({ primaryGoalId: goalId });
+              }
+              navigate('builder');
+            }}
+            onViewMenu={() => navigate('menu')}
+            onPrefetchBuilder={prefetch.builder}
+            onPrefetchMenu={prefetch.menu}
+          />
+        )}
+        {state.step === 'builder' && (
+          <BuilderScreen
+            subscription={state.subscription}
+            onUpdate={updateSubscription}
+            onSubscribe={() => navigate('auth')}
+            onViewMenu={() => navigate('menu')}
+            onGoHome={() => navigate('landing')}
+            onPrefetchAuth={prefetch.auth}
+          />
+        )}
+        {state.step === 'menu' && (
+          <MenuScreen
+            onBack={() => navigate('landing')}
+            onSelectPlan={() => navigate('builder')}
+          />
+        )}
+        {state.step === 'auth' && (
+          <AuthScreen
+            subscription={state.subscription}
+            onProfileSubmit={(profile) => {
+              updateProfile(profile);
+              navigate('success');
+            }}
+            onViewMenu={() => navigate('menu')}
+            onGoHome={() => navigate('landing')}
+          />
+        )}
+        {state.step === 'success' && (
+          <SuccessScreen onBackHome={() => navigate('landing')} />
+        )}
+      </Suspense>
     </div>
   );
 }

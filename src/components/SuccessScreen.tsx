@@ -33,11 +33,11 @@ export default function SuccessScreen({ onBackHome }: SuccessScreenProps) {
             className="relative"
           >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-white/50 -z-10 rounded-full blur-2xl"></div>
-            <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQipJmYVKndt-jIS8wTMhZHTGwGWBmcFheKovavM3sFq3QbZNlqwLewNUhcHLqZnpDeNMxfhh5udBe3iSZql0mINi95DYPIjAbQH-wAlvbrNpAl_xOqubIb57e2mwqkdDFFLSu2XXR24EtdpQ5AL2tZ9YiK2EuBq2WWYDYP2xunSJ9E03LqWxExlvk2WSzYsM60Fdju9HhXEH4rZ9qRTlpgLg5ipDheCkkeSUXJLbAPcjtpe5LUJiSbLqYuY9MCOYskN4HuVz7tq2w" 
+            <img
+              src="/weight-loss.jpg"
               className="w-full rounded-[3rem] shadow-2xl rotate-3 transform-gpu border-8 border-white"
-              alt="Elite Athlete"
-              referrerPolicy="no-referrer"
+              alt="Fresh Fitopus meal"
+              decoding="async"
             />
             <div className="absolute -bottom-8 -right-8 bg-black text-white p-6 rounded-2xl shadow-xl -rotate-6">
               <span className="material-symbols-outlined text-4xl block mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>

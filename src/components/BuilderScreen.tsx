@@ -9,9 +9,11 @@ interface BuilderScreenProps {
   onSubscribe: () => void;
   onViewMenu: () => void;
   onGoHome: () => void;
+  /** Warm the auth screen's chunk (incl. Firebase) before the user submits. */
+  onPrefetchAuth?: () => void;
 }
 
-export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onViewMenu, onGoHome }: BuilderScreenProps) {
+export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onViewMenu, onGoHome, onPrefetchAuth }: BuilderScreenProps) {
   const toggleMeal = (meal: MealType) => {
     const next = subscription.mealsPerDay.includes(meal)
       ? subscription.mealsPerDay.filter(m => m !== meal)
@@ -96,10 +98,12 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                       className={`relative rounded-xl overflow-hidden group p-2 text-left transition-all ${selected ? 'bg-primary-container shadow-xl ring-2 ring-primary scale-[1.02]' : 'bg-surface-container-low hover:bg-surface-container'}`}
                     >
                       <div className="h-48 rounded-lg overflow-hidden mb-4 relative">
-                        <img 
-                          src={goal.imageUrl} 
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                        <img
+                          src={goal.imageUrl}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                           alt={goal.name}
+                          loading="lazy"
+                          decoding="async"
                           referrerPolicy="no-referrer"
                         />
                         {selected && (
@@ -253,8 +257,9 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                     <span className="text-lg font-bold uppercase tracking-tighter text-slate-300">Total Investment</span>
                     <span className="text-4xl font-black text-primary-fixed font-headline drop-shadow-sm italic">₹{subscription.totalInvestment}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={onSubscribe}
+                    onMouseEnter={onPrefetchAuth}
                     className="w-full bg-primary-container text-on-primary-container py-6 rounded-full font-black text-xl hover:scale-[1.03] active:scale-95 transition-all shadow-xl shadow-primary/30 flex items-center justify-center gap-3 group"
                   >
                     Subscribe Now
