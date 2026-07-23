@@ -5,7 +5,7 @@
 
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { AppState, Subscription, UserProfile } from './types';
-import { PRICE_PER_MEAL } from './constants';
+import { DURATION_DAYS, getMealPrice } from './constants';
 import LandingScreen from './components/LandingScreen';
 
 // Only the landing screen is needed for first paint. Everything else — and
@@ -31,17 +31,17 @@ function ScreenFallback() {
   );
 }
 
-const DURATION_DAYS: Record<string, number> = { '3day': 3, '1week': 5, '2week': 10 };
-
-const calcInvestment = (durationId: string, mealsPerDay: string[]) =>
-  PRICE_PER_MEAL * mealsPerDay.length * (DURATION_DAYS[durationId] ?? 5);
+// Per-meal rate depends on both the goal and the duration, so the total has to
+// be recalculated whenever any of the three inputs changes.
+const calcInvestment = (durationId: string, mealsPerDay: string[], primaryGoalId: string) =>
+  getMealPrice(primaryGoalId, durationId) * mealsPerDay.length * (DURATION_DAYS[durationId] ?? 5);
 
 const INITIAL_SUBSCRIPTION: Subscription = {
   durationId: '1week',
   mealsPerDay: ['Breakfast', 'Dinner'],
   dietaryPreference: 'Vegetarian',
   primaryGoalId: 'loss',
-  totalInvestment: calcInvestment('1week', ['Breakfast', 'Dinner']),
+  totalInvestment: calcInvestment('1week', ['Breakfast', 'Dinner'], 'loss'),
   status: 'draft'
 };
 
@@ -76,7 +76,7 @@ export default function App() {
   const updateSubscription = (sub: Partial<Subscription>) => {
     setState(prev => {
       const updated = { ...prev.subscription, ...sub };
-      updated.totalInvestment = calcInvestment(updated.durationId, updated.mealsPerDay);
+      updated.totalInvestment = calcInvestment(updated.durationId, updated.mealsPerDay, updated.primaryGoalId);
       return { ...prev, subscription: updated };
     });
   };

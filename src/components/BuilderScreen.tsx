@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Subscription, MealType } from '../types';
-import { PLAN_DURATIONS, PRIMARY_GOALS, PRICE_PER_MEAL } from '../constants';
+import { PLAN_DURATIONS, PRIMARY_GOALS, DURATION_DAYS, getMealPrice, getGoalFromPrice } from '../constants';
 import Logo from './Logo';
 
 interface BuilderScreenProps {
@@ -23,6 +23,7 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
 
   const currentDuration = PLAN_DURATIONS.find(d => d.id === subscription.durationId);
   const currentGoal = PRIMARY_GOALS.find(g => g.id === subscription.primaryGoalId);
+  const currentUnitPrice = getMealPrice(subscription.primaryGoalId, subscription.durationId);
 
   return (
     <div className="bg-surface text-on-surface font-body min-h-screen">
@@ -116,9 +117,9 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                         <h3 className="text-xl font-extrabold font-headline leading-tight">{goal.name}</h3>
                         <p className={`font-bold text-sm tracking-widest uppercase mt-1 ${selected ? 'text-on-primary-container' : 'text-secondary'}`}>{goal.kcal} kcal</p>
                         <div className="mt-1.5 pt-1.5 border-t border-outline-variant/30 flex items-baseline gap-1">
-                          <span className="text-base font-black font-headline text-on-surface">₹{PRICE_PER_MEAL}</span>
+                          <span className="text-xs font-semibold text-on-surface-variant/70">from</span>
+                          <span className="text-base font-black font-headline text-on-surface">₹{getGoalFromPrice(goal.id)}</span>
                           <span className="text-sm font-semibold text-on-surface-variant">/meal</span>
-                          <span className="text-xs font-medium text-on-surface-variant/60 italic">onwards</span>
                         </div>
                       </div>
                     </button>
@@ -135,8 +136,9 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {PLAN_DURATIONS.map((plan) => {
-                  const days = plan.id === '3day' ? 3 : plan.id === '1week' ? 5 : 10;
-                  const price = subscription.mealsPerDay.length * PRICE_PER_MEAL * days;
+                  const days = DURATION_DAYS[plan.id] ?? 5;
+                  const unitPrice = getMealPrice(subscription.primaryGoalId, plan.id);
+                  const price = subscription.mealsPerDay.length * unitPrice * days;
                   const selected = subscription.durationId === plan.id;
                   return (
                     <button
@@ -159,7 +161,7 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                         ₹{price}
                       </span>
                       <span className="block text-xs text-on-surface-variant/60 font-medium mt-0.5">
-                        ₹{PRICE_PER_MEAL} × {subscription.mealsPerDay.length} meal{subscription.mealsPerDay.length > 1 ? 's' : ''} × {days} days
+                        ₹{unitPrice} × {subscription.mealsPerDay.length} meal{subscription.mealsPerDay.length > 1 ? 's' : ''} × {days} days
                       </span>
                     </button>
                   );
@@ -242,6 +244,10 @@ export default function BuilderScreen({ subscription, onUpdate, onSubscribe, onV
                 <div className="flex justify-between items-end border-b border-white/5 pb-3">
                   <span className="text-xs font-label font-bold uppercase tracking-widest text-slate-400">Preference</span>
                   <span className="font-bold text-slate-100">{subscription.dietaryPreference}</span>
+                </div>
+                <div className="flex justify-between items-end border-b border-white/5 pb-3">
+                  <span className="text-xs font-label font-bold uppercase tracking-widest text-slate-400">Rate</span>
+                  <span className="font-bold text-slate-100">₹{currentUnitPrice}/meal</span>
                 </div>
                 <div className="flex justify-between items-end border-b border-white/5 pb-3">
                   <span className="text-xs font-label font-bold uppercase tracking-widest text-slate-400">Weekly Meals</span>

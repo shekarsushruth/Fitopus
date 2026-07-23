@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import Logo from './Logo';
-import { PRICE_PER_MEAL } from '../constants';
+import { LOWEST_MEAL_PRICE } from '../constants';
 
 interface LandingScreenProps {
   onGetStarted: (goalId?: string) => void;
@@ -82,7 +82,7 @@ export default function LandingScreen({ onGetStarted, onViewMenu, onPrefetchBuil
                   View Menu
                 </button>
               </div>
-              <p className="mt-4 text-sm text-on-surface-variant/80 font-medium">Starting from <span className="font-black text-on-surface">₹{PRICE_PER_MEAL}/meal</span> · No lock-in</p>
+              <p className="mt-4 text-sm text-on-surface-variant/80 font-medium">Starting from <span className="font-black text-on-surface">₹{LOWEST_MEAL_PRICE}/meal</span> · No lock-in</p>
             </motion.div>
             <motion.div 
               className="relative"
